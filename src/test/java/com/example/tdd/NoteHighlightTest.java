@@ -33,22 +33,14 @@ public class NoteHighlightTest {
     }
 
     private boolean isPosthNotSpace(String str, int idx) {
-        boolean postchNotSpace = false;
         int postchIdx = idx + "note".length();
-        if (postchIdx < str.length() && isNotBlank(str.charAt(postchIdx))) {
-            postchNotSpace = true;
-        }
-        return postchNotSpace;
+        return postchIdx < str.length() && isNotBlank(str.charAt(postchIdx));
     }
 
 
     private static boolean isPrechNotSpace(String str, int idx) {
-        boolean prechNotSpace = false;
         int prechIdx = idx - 1;
-        if (prechIdx >= 0 && isNotBlank(str.charAt(prechIdx))) {
-            prechNotSpace = true;
-        }
-        return prechNotSpace;
+        return prechIdx >= 0 && isNotBlank(str.charAt(prechIdx));
     }
 
     private static boolean isNotBlank(char pre) {
