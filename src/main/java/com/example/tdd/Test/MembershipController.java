@@ -1,9 +1,28 @@
 package com.example.tdd.Test;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.example.tdd.Test.MembershipConstants.USER_ID_HEADER;
+
 @RestController
+@RequiredArgsConstructor
 public class MembershipController {
-    // https://mangkyu.tistory.com/184
-    // [ Controller 계층 개발 ]
+
+    private final MembershipService membershipService;
+    @PostMapping("/api/v1/memberships")
+    public ResponseEntity<MembershipResponse> addMembership(
+            @RequestHeader(USER_ID_HEADER) final String userId,
+            @RequestBody @Validated final MembershipRequest membershipRequest) {
+
+        membershipService.addMembership(userId, membershipRequest.getMembershipType(), membershipRequest.getPoint());
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 }
