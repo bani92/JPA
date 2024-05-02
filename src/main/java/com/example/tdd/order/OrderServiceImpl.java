@@ -1,16 +1,18 @@
 package com.example.tdd.order;
 
 import com.example.tdd.discount.DiscountPolicy;
-import com.example.tdd.discount.FixDiscountPolicy;
 import com.example.tdd.member.Member;
 import com.example.tdd.member.MemberRepository;
-import com.example.tdd.member.MemoryMemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class OrderServiceImpl implements OrderService {
 
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
+    @Autowired
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
