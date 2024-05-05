@@ -12,6 +12,9 @@ public class OrderServiceImpl implements OrderService {
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
+    // 생성자에서 혹시라도 값이 설정되지 않는 오류를 컴파일 시점에서 막아준다. (final)
+    // 필드에 final 쓸수있는 방법은 생성자 주입 방식
+
     @Autowired
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
