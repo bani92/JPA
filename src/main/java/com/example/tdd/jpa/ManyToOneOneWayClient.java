@@ -15,6 +15,7 @@ public class ManyToOneOneWayClient {
 
         try {
             dataInsert(emf);
+            dataSelect(emf);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -44,5 +45,11 @@ public class ManyToOneOneWayClient {
 
         em.getTransaction().commit();
         em.close();
+    }
+
+    private static void dataSelect(EntityManagerFactory emf) {
+        EntityManager em = emf.createEntityManager();
+        Employee employee = em.find(Employee.class, 2L);
+        System.out.println(employee.getName() + "의 부서 : " + employee.getDept().getName());
     }
 }
