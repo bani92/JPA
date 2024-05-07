@@ -77,6 +77,11 @@ public class ManyToOneOneWayClient {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
+        Employee employee = em.find(Employee.class, 1L);
+        employee.setDept(null);
+        Employee employee2 = em.find(Employee.class, 2L);
+        employee2.setDept(null);
+
         Department department = em.find(Department.class, 1L);
         em.remove(department);
         em.getTransaction().commit();
