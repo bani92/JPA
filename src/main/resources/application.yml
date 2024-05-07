@@ -1,21 +1,37 @@
 # 서버 포트 설정
 server:
-  port: 8082
+  port: 8081
 
 # database 연동 설정
-spring:
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/basic
-    username: root
-    password: 1234
-  thymeleaf:
-    cache: false
+#spring:
+#  datasource:
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    url: jdbc:mariadb://localhost:3306/basic
+#    username: root
+#    password: 1234
+#  thymeleaf:
+#    cache: false
+#
+#  # spring data jpa 설정
+#  jpa:
+#    hibernate:
+#      ddl-auto: update # 애플리케이션 시작 시 자동으로 데이터베이스 스키마를 업데이트하는 설정
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MariaDBDialect # MariaDB에 맞는 Hibernate Dialect를 지정
+#    show-sql: true # Hibernate가 생성하는 SQL 쿼리를 보여줄지 여부
 
-  # spring data jpa 설정
-  jpa:
-    database-platform: org.hibernate.dialect.MariaDBDialect
-    open-in-view: false
-    show-sql: true
-    hibernate:
-      ddl-auto: update
+
+#spring:
+#  datasource:
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:tcp://localhost/~/test
+#    username: sa
+#    password:
+#  jpa:
+#    database-platform: org.hibernate.dialect.H2Dialect
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: create # 이 부분은 XML에 없지만 추가되어야 할 수도 있습니다.
+
+

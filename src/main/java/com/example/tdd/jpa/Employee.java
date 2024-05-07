@@ -1,6 +1,7 @@
 package com.example.tdd.jpa;
 
 import jakarta.persistence.*;
+import jakarta.persistence.EnumType;
 import lombok.Data;
 
 @Data
@@ -14,7 +15,10 @@ public class Employee {
     @Column(length = 25, nullable = false)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "DEPT_ID")
     private Department dept;
+
+    @Enumerated(EnumType.STRING)
+    private MemberType memberType;
 }
