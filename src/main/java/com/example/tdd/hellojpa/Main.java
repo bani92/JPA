@@ -26,9 +26,14 @@ public class Main {
             // 회원 저장
             Member member = new Member();
             member.setName("member1");
-            member.setTeamId(team.getId());
+            member.setTeam(team);
             em.persist(member);
 
+            em.flush();
+            em.clear();
+
+            Member findMember = em.find(Member.class, member.getId());
+            Team findTeam = findMember.getTeam();
             tx.commit();
             em.close();
         } catch (Exception e) {

@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "member")
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +14,10 @@ public class Member {
     private String name;
     private int age;
 
-    @Column(name = "TEAM_ID")
-    private Long teamId;
+//    @Column(name = "TEAM_ID")
+//    private Long teamId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
 }
