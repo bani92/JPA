@@ -7,6 +7,8 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -29,13 +31,23 @@ public class Main {
             member.setTeam(team);
             em.persist(member);
 
-            em.flush();
+
+            tx.commit();
             em.clear();
 
             Member findMember = em.find(Member.class, member.getId());
             Team findTeam = findMember.getTeam();
-            tx.commit();
+
+            List<Member> members = findTeam.getMembers();
+
+            for (Member member1 : members) {
+                System.out.println("member1 = " + member1);
+            }
+
+
             em.close();
+
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
