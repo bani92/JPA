@@ -1,20 +1,15 @@
 package com.example.tdd.hellojpa.entity;
 
 import jakarta.persistence.*;
+import jdk.jfr.Enabled;
 import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "member")
-public class Member {
+@Table(name = "team")
+public class Team {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "USERNAME")
     private String name;
-    private int age;
-
-    @Column(name = "TEAM_ID")
-    private Long teamId;
 }
