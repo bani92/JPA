@@ -28,11 +28,11 @@ public class Main {
             // 회원 저장
             Member member = new Member();
             member.setName("member1");
-       //     member.setTeam(team);
+            member.setTeam(team);       // member team 추가됨
             em.persist(member);
 
-            team.getMembers().add(member);
-
+//            team.getMembers().add(member);
+//            위와 같이 적어도 member에 team 추가되지않고 null
             tx.commit();
             em.clear();
 
