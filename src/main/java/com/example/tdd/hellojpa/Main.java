@@ -28,6 +28,7 @@ public class Main {
             // 회원 저장
             Member member = new Member();
             member.setName("member1");
+            team.getMembers().add(member);  // 순수한 객체 관계를 고려하면 항상 양쪽다 값을 입력
             member.setTeam(team);       // member team 추가됨
             em.persist(member);
 
