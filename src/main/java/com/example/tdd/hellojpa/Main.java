@@ -28,21 +28,26 @@ public class Main {
             // 회원 저장
             Member member = new Member();
             member.setName("member1");
-            member.setTeam(team);
+       //     member.setTeam(team);
             em.persist(member);
 
+            team.getMembers().add(member);
 
             tx.commit();
             em.clear();
 
-            Member findMember = em.find(Member.class, member.getId());
-            Team findTeam = findMember.getTeam();
-
-            List<Member> members = findTeam.getMembers();
-
-            for (Member member1 : members) {
-                System.out.println("member1 = " + member1);
-            }
+//            Member findMember = em.find(Member.class, member.getId());
+//            Team findTeam = findMember.getTeam();
+//
+//            List<Member> members = findTeam.getMembers();
+//
+//            for (Member member1 : members) {
+//                System.out.println("member1 = " + member1);
+//            }
+//
+//            Team findTeam2 = em.find(Team.class, team.getId());
+//            int size = findTeam2.getMembers().size();
+//            System.out.println("size = " + size);
 
 
             em.close();
