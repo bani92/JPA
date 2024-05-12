@@ -35,7 +35,6 @@ public class Main {
 //            team.getMembers().add(member);
 //            위와 같이 적어도 member에 team 추가되지않고 null
             tx.commit();
-            em.flush();
             /**
              * 영속성 컨텍스트를 비우지 않음
              * 영속성 컨텍스트의 변경내용을 데이터베이스에 동기화
@@ -43,8 +42,24 @@ public class Main {
              */
             em.clear();
 
-//            Member findMember = em.find(Member.class, member.getId());
-//            Team findTeam = findMember.getTeam();
+            /**
+             * 준영속 상태로 만드는 방법
+             * em.detach(entity)
+             * 특정 엔티티만 준영속 상태로 전환
+             *
+             * em.clear()
+             * 영속성 컨텍스트를 완전히 초기화
+             *
+             * em.close()
+             * 영속성 컨텍스트를 종료
+             */
+
+            Member findMember = em.find(Member.class, member.getId());
+            Team findTeam = findMember.getTeam();
+
+            em.clear();
+            findTeam.getName();
+            System.out.println("findTeam = " + findTeam);
 //
 //            List<Member> members = findTeam.getMembers();
 //
