@@ -35,6 +35,12 @@ public class Main {
 //            team.getMembers().add(member);
 //            위와 같이 적어도 member에 team 추가되지않고 null
             tx.commit();
+            em.flush();
+            /**
+             * 영속성 컨텍스트를 비우지 않음
+             * 영속성 컨텍스트의 변경내용을 데이터베이스에 동기화
+             * 트랜잭션이라는 작업 단위가 중요 -> 커밋 직전에만 동기화 하면됨
+             */
             em.clear();
 
 //            Member findMember = em.find(Member.class, member.getId());
