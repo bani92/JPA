@@ -27,7 +27,7 @@ public class Main {
 
             // 회원 저장
             Member member = new Member();
-            member.setName("member1");
+            member.setName("hello");
             team.getMembers().add(member);  // 순수한 객체 관계를 고려하면 항상 양쪽다 값을 입력
             member.setTeam(team);       // member team 추가됨
             em.persist(member);
@@ -40,7 +40,7 @@ public class Main {
              * 영속성 컨텍스트의 변경내용을 데이터베이스에 동기화
              * 트랜잭션이라는 작업 단위가 중요 -> 커밋 직전에만 동기화 하면됨
              */
-            em.clear();
+
 
             /**
              * 준영속 상태로 만드는 방법
@@ -54,12 +54,16 @@ public class Main {
              * 영속성 컨텍스트를 종료
              */
 
-            Member findMember = em.find(Member.class, member.getId());
-            Team findTeam = findMember.getTeam();
+            String jpql = "select m From Member m join fetch m.team where m.name like '%hello%'";
+            List<Member> result = em.createQuery(jpql, Member.class).getResultList();
+            System.out.println("result = " + result.get(0));
 
-            em.clear();
-            findTeam.getName();
-            System.out.println("findTeam = " + findTeam);
+//            Member findMember = em.find(Member.class, member.getId());
+//            Team findTeam = findMember.getTeam();
+//
+//            em.clear();
+//            findTeam.getName();
+//            System.out.println("findTeam = " + findTeam);
 //
 //            List<Member> members = findTeam.getMembers();
 //
