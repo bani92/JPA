@@ -34,22 +34,23 @@ public class ManyToOneBothWayClient {
         Employee employee = new Employee();
         employee.setName("둘리");
         employee.setDept(department);
-        employee.setMemberType(MemberType.USER);
         em.persist(employee);
 
         Employee employee2 = new Employee();
         employee2.setName("도우너");
         employee2.setDept(department);
-        employee.setMemberType(MemberType.ADMIN);
         em.persist(employee2);
 
+
+        System.out.println(department.getName() + "의 직원 수 : " + department.getEmployeeList().size());
         em.getTransaction().commit();
         em.close();
     }
 
     private static void dataSelect(EntityManagerFactory emf) {
         EntityManager em = emf.createEntityManager();
-        Department department = em.find(Department.class, 1L);
+
+        Department department = em.find(Department.class, 2L);
 
         System.out.println("검색된 부서 = " + department.getName());
         System.out.println("부서에 소속된 직원 명단");

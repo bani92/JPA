@@ -21,4 +21,9 @@ public class Employee {
 
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
+
+    public void setDept(Department dept) {
+        this.dept = dept;
+        dept.getEmployeeList().add(this);
+    }
 }
