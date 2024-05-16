@@ -15,7 +15,8 @@ public class Employee {
     @Column(length = 25, nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    // Employee 엔티티가 관리 상태로 전환될때 연관관계에 있는 Department 엔티티도 같이 관리 상태로 전환
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "DEPT_ID")
     private Department dept;
 

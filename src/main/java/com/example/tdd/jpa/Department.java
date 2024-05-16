@@ -19,7 +19,7 @@ public class Department {
     @Column(length = 25, nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "dept", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "dept", cascade = { CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Employee> employeeList = new ArrayList<>();
 
 }
