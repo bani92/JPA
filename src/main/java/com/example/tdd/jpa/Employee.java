@@ -25,6 +25,14 @@ public class Employee {
 
     public void setDept(Department dept) {
         this.dept = dept;
-        dept.getEmployeeList().add(this);
+
+        if(dept != null) {
+            dept.getEmployeeList().add(this);
+        }
+    }
+
+    // 부서 정보를 null로 설정하여 직원을 대기 상태로 전환시킨다.
+    public void standby() {
+        this.dept = null;
     }
 }

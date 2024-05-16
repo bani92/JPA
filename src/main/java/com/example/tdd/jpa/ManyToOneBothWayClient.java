@@ -13,7 +13,7 @@ public class ManyToOneBothWayClient {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Chapter04");
 
         try {
-            dataInsert(emf);
+        //    dataInsert(emf);
         //    dataSelect(emf);
             dataDelete(emf);
         } catch (Exception e) {
@@ -91,18 +91,16 @@ public class ManyToOneBothWayClient {
         em.getTransaction().begin();
 
         // 부서 검색
-        Department department = em.find(Department.class, 2L);
+        Department department = em.find(Department.class, 4L);
 
-//        List<Employee> employeeList = department.getEmployeeList();
-//        for (Employee employee : employeeList) {
-//            em.remove(employee);
-//        }
+        List<Employee> employeeList = department.getEmployeeList();
+        for (Employee employee : employeeList) {
+            employee.standby();
+        }
 
         em.remove(department);
-        em.close();
-
-
 
         em.getTransaction().commit();
+        em.close();
     }
 }
