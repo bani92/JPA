@@ -2,10 +2,12 @@ package com.example.tdd.jpa2;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.Date;
 
 @Data
+@ToString(exclude = "employee")
 @Entity
 @Table(name = "S_EMP_CARD")
 public class EmployeeCard {
@@ -20,12 +22,11 @@ public class EmployeeCard {
 
     private String role;    // 권한
 
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "EMP_CARD_ID")
+    @OneToOne(mappedBy = "card")
     private Employee employee;
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-        employee.setCard(this);
-    }
+//    public void setEmployee(Employee employee) {
+//        this.employee = employee;
+//        employee.setCard(this);
+//    }
 }
