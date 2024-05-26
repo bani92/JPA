@@ -3,6 +3,9 @@ package com.example.tdd.jpa3;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "S_PRODUCT")
@@ -18,4 +21,10 @@ public class Product {
     private String shortDesc; // 상품 설명
 
     private String category;  // 카테고리
+
+    @ManyToMany(mappedBy = "productList")
+    private List<Order> orderList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product")
+    private List<Item> itemList = new ArrayList<>();
 }
