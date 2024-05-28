@@ -1,10 +1,8 @@
 package com.example.tdd.jpa4;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -24,15 +22,26 @@ public class JPQLBasicClient {
         EntityManager em = emf.createEntityManager();
 
         // JPQL
-        String jpql = "SELECT e FROM Employee AS e";
+//        String jpql = "SELECT id, name, deptName, salary FROM Employee";
+
+        // NEW 생성자 사용시 패키지 경로가 포함된 전체 경로를 지정
+        String jpql = "SELECT " + "NEW com.example.tdd.jpa4.EmployeeSalaryData(id, salary, " +
+                "commissionPct) FROM Employee";
+
+        TypedQuery<EmployeeSalaryData> query = em.createQuery(jpql, EmployeeSalaryData.class);
+
+        List<EmployeeSalaryData> resultList = query.getResultList();
+
 
         // JPQL 전송 - 영속 컨테이너에 전송할 JPQL , JPQL 실행 결과를 매핑할 엔티티타입
-        TypedQuery<Employee> query = em.createQuery(jpql, Employee.class);
-        List<Employee> resultList = query.getResultList();
+//        Query query = em.createQuery(jpql);
+//        List<Object[]> resultList = query.getResultList();
+        // TypedQuery<Employee> query = em.createQuery(jpql, Employee.class);
+        //List<Employee> resultList = query.getResultList();
 
         // 검색 결과 처리
         System.out.println("검색된 직원 목록");
-        for (Employee result : resultList) {
+        for (EmployeeSalaryData result : resultList) {
             System.out.println("---> " + result.toString());
         }
         em.close();
