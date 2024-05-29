@@ -21,11 +21,12 @@ public class JPQLBasicClient {
     private static void dataSelect(EntityManagerFactory emf) {
         EntityManager em = emf.createEntityManager();
 
-        String jpql = "SELECT id, name, title, deptName, salary " + "FROM Employee WHERE id = ?1 AND name = ?2";
+        String jpql = "SELECT id, name, title, deptName, salary FROM Employee " +
+                      " WHERE id = :employeeId AND name = :employeeName";
 
         Query query = em.createQuery(jpql);
-        query.setParameter(1, 1L);
-        query.setParameter(2, "직원 1");
+        query.setParameter("employeeId", 1L);
+        query.setParameter("employeeName", "직원 1");
 
         Object[] result = (Object[]) query.getSingleResult();
         System.out.println(result[0] + "번 직원의 정보");
