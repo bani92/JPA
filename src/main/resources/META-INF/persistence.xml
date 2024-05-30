@@ -4,6 +4,7 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
     <persistence-unit name="Chapter06">
             <class>com.example.tdd.jpa4.Employee</class>
+            <class>com.example.tdd.jpa4.Department</class>
 <!--        <class>com.example.tdd.jpa3.Item</class>-->
 <!--        <class>com.example.tdd.jpa3.Order</class>-->
 <!--        <class>com.example.tdd.jpa3.Product</class>-->

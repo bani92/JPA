@@ -21,16 +21,28 @@ public class JPQLBasicClient {
     private static void dataSelect(EntityManagerFactory emf) {
         EntityManager em = emf.createEntityManager();
 
-        String jpql = "SELECT id, name, title, deptName, salary FROM Employee " +
-                      " WHERE id = :employeeId AND name = :employeeName";
+        String jpql = "SELECT e FROM Employee e WHERE e.id = 1L";
+        TypedQuery<Employee> query = em.createQuery(jpql, Employee.class);
 
-        Query query = em.createQuery(jpql);
-        query.setParameter("employeeId", 1L);
-        query.setParameter("employeeName", "직원 1");
+        // 1번 직원 검색
+        Employee findEmp1 = query.getSingleResult();
 
-        Object[] result = (Object[]) query.getSingleResult();
-        System.out.println(result[0] + "번 직원의 정보");
-        System.out.println(Arrays.toString(result));
+        // 1번 직원 검색
+        Employee findEmp2 = query.getSingleResult();
+
+        if(findEmp1 == findEmp2) {
+            System.out.println("두 객체의 주소는 동일하다.");
+        }
+//        String jpql = "SELECT id, name, title, deptName, salary FROM Employee " +
+//                      " WHERE id = :employeeId AND name = :employeeName";
+//
+//        Query query = em.createQuery(jpql);
+//        query.setParameter("employeeId", 1L);
+//        query.setParameter("employeeName", "직원 1");
+//
+//        Object[] result = (Object[]) query.getSingleResult();
+//        System.out.println(result[0] + "번 직원의 정보");
+//        System.out.println(Arrays.toString(result));
 
 
         // JPQL
