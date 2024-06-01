@@ -23,23 +23,16 @@ public class JPQLJoinClient {
     private static void dataSelect(EntityManagerFactory emf) {
         EntityManager em = emf.createEntityManager();
 
-        String jpql = "SELECT e, e.dept FROM Employee e " + "ORDER BY e.dept.name DESC, e.salary ASC";
-        TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
-        int pageNumber = 3;
-        int pageSize = 5;
-        int startNum = (pageNumber * pageSize) - pageSize;
-        query.setFirstResult(startNum);
-        query.setMaxResults(pageSize);
+        String jpql = "SELECT e FROM Employee e " + "WHERE NOT EXISTS (SELECT d FROM Department d WHERE d = e.dept)";
+        TypedQuery<Employee> query = em.createQuery(jpql, Employee.class);
+
 //        String jpql = "SELECT e, d FROM Employee e, Department d " + "WHERE e.name = d.name";
 //        TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
 //
-        List<Object[]> resultList = query.getResultList();
-        System.out.println(pageNumber + "페이지에 해당하는 직원 목록");
-        System.out.println("검색된 직원 목록");
-        for (Object[] result : resultList) {
-            Employee employee = (Employee) result[0];
-            Department department = (Department) result[1];
-            System.out.println(employee.getId() + " : " + employee.getName() + "의 부서 " + department.getName());
+        List<Employee> resultList = query.getResultList();
+        System.out.println("부서에 속하지 않은 직원 명단");
+        for (Employee employee : resultList) {
+            System.out.println(employee.getName());
         }
 
 //        String jpql = "SELECT e FROM Employee e";
