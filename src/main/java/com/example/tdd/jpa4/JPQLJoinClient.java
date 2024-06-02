@@ -23,16 +23,19 @@ public class JPQLJoinClient {
     private static void dataSelect(EntityManagerFactory emf) {
         EntityManager em = emf.createEntityManager();
 
-        String jpql = "SELECT e FROM Employee e " + "WHERE NOT EXISTS (SELECT d FROM Department d WHERE d = e.dept)";
-        TypedQuery<Employee> query = em.createQuery(jpql, Employee.class);
+        String jpql = "SELECT d FROM Department d " + "WHERE :employee member of d.employeeList";
+        TypedQuery<Department> query = em.createQuery(jpql, Department.class);
+
+        Employee findEmp = em.find(Employee.class, 6L);
+        query.setParameter("employee", findEmp);
 
 //        String jpql = "SELECT e, d FROM Employee e, Department d " + "WHERE e.name = d.name";
 //        TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
 //
-        List<Employee> resultList = query.getResultList();
-        System.out.println("부서에 속하지 않은 직원 명단");
-        for (Employee employee : resultList) {
-            System.out.println(employee.getName());
+        List<Department> resultList = query.getResultList();
+        System.out.println(findEmp.getId() + "번 직원이 소속되어 있는 부서 목록");
+        for (Department department : resultList) {
+            System.out.println(department.getName());
         }
 
 //        String jpql = "SELECT e FROM Employee e";
