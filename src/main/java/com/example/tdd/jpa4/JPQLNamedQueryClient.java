@@ -1,9 +1,6 @@
 package com.example.tdd.jpa4;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -24,12 +21,11 @@ public class JPQLNamedQueryClient {
     private static void dataSelect(EntityManagerFactory emf) {
         EntityManager em = emf.createEntityManager();
 
-        String jpql = "SELECT CONCAT(e.name, '의 급여 : ', e.salary) as 급여, "
-                + "     SUBSTRING(e.name, 1, 2), "
-                + "     TRIM(TRAILING '부' FROM e.dept.name), "
-                + "     LOWER(e.mailId) "
-                + "FROM Employee e";
-        TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
+     //   String sql = "SELECT * FROM S_EMP WHERE DEPT_ID = :deptId ORDER BY SALARY DESC";
+        Query query = em.createNamedQuery("Employee.searchByDeptId");
+        query.setParameter("deptId", 2L);
+        query.setFirstResult(0);
+        query.setMaxResults(3);
 
         List<Object[]> resultList = query.getResultList();
         for (Object[] result : resultList) {
