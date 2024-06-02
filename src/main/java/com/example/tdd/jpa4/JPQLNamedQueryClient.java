@@ -11,7 +11,10 @@ public class JPQLNamedQueryClient {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Chapter06");
         try {
           //  dataInsert(emf);
-            dataSelect(emf);
+            dataUpdate(emf);
+         //   dataDelete(emf);
+         //   dataSelect(emf);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -55,5 +58,48 @@ public class JPQLNamedQueryClient {
 
         em.getTransaction().commit();
         em.close();
+    }
+
+    private static void dataUpdate(EntityManagerFactory emf) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        Employee findEmp = em.find(Employee.class, 3L);
+        System.out.println("수정 전 급여 : " + findEmp.getSalary());
+
+        Query query = em.createQuery("UPDATE Employee e " + "SET e.salary=salary * 1.3 " + "WHERE e.id=:empId");
+        query.setParameter("empId", 3L);
+        int updateCnt = query.executeUpdate();
+        System.out.println("updateCnt = " + updateCnt);
+
+        System.out.println("수정 후 급어 : " + findEmp.getSalary() + " name = " + findEmp.getName());
+
+        String jpql = "SELECT e FROM Employee e WHERE e.id = 3L";
+        query = em.createQuery(jpql);
+        Employee employee = (Employee) query.getSingleResult();
+        System.out.println(employee.getId() + "번 직원의 수정된 급여 : " + employee.getSalary());
+
+
+//        Query query = em.createQuery("UPDATE Employee e SET e.dept = :department " + "WHERE e.id = :empId");
+//        Department findDept = em.find(Department.class, 1L);
+//        query.setParameter("department", findDept);
+//        query.setParameter("empId", 7L);
+//        int updateCount = query.executeUpdate();
+//        System.out.println("updateCount = " + updateCount);
+        em.getTransaction().commit();
+        em.close();
+
+    }
+
+    private static void dataDelete(EntityManagerFactory emf) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        Query query = em.createQuery("DELETE Employee e WHERE e.name = :empName");
+        query.setParameter("empName", "아르바이트");
+        int updateCount = query.executeUpdate();
+        System.out.println("updateCount = " + updateCount);
+
+
     }
 }
