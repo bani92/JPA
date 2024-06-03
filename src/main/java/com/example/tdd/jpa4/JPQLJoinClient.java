@@ -60,7 +60,7 @@ public class JPQLJoinClient {
             employee.setName("개발직원 " + i);
             employee.setSalary(i * 12700.00);
             employee.setMailId("Dev-" + i);
-            employee.setDept(department);
+       //     employee.setDept(department);
         }
         em.persist(department);
 
@@ -72,7 +72,7 @@ public class JPQLJoinClient {
             employee.setName("개발직원 " + i);
             employee.setSalary(i * 12700.00);
             employee.setMailId("Dev-" + i);
-            employee.setDept(department2);
+         //   employee.setDept(department2);
         }
         em.persist(department2);
 

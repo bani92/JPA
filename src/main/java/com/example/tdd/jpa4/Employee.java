@@ -44,14 +44,14 @@ public class Employee {
     @Column(name = "COMMISSION_PCT")
     private Double commissionPct;
 
-    @ManyToOne
-    @JoinColumn(name = "DEPT_ID")
-    private Department dept;
-
-    public void setDept(Department department) {
-        this.dept = department;
-        if (department != null) {
-            department.getEmployeeList().add(this);
-        }
-    }
+//    @ManyToOne
+//    @JoinColumn(name = "DEPT_ID")
+//    private Department dept;
+//
+//    public void setDept(Department department) {
+//        this.dept = department;
+//        if (department != null) {
+//            department.getEmployeeList().add(this);
+//        }
+//    }
 }
