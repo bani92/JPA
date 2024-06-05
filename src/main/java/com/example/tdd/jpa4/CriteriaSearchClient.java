@@ -8,6 +8,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class CriteriaSearchClient {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Chapter07");
         try {
-            dataInsert(emf);
+       //     dataInsert(emf);
             dataSelect(emf);
         } catch (Exception e) {
             e.printStackTrace();
@@ -34,24 +35,28 @@ public class CriteriaSearchClient {
         CriteriaBuilder builder = em.getCriteriaBuilder();
 
         // 크라이테리어 쿼리 생성
-        CriteriaQuery<Employee> criteriaQuery = builder.createQuery(Employee.class);
+        CriteriaQuery<Object[]> criteriaQuery = builder.createQuery(Object[].class);
+        // CriteriaQuery<Employee> criteriaQuery = builder.createQuery(Employee.class);
 
         // FROM Employee emp
         Root<Employee> emp = criteriaQuery.from(Employee.class);
 
+        // SELECT emp.id, emp.name, emp.salary
+        criteriaQuery.multiselect(emp.get("id"), emp.get("name"), emp.get("salary"));
+
         // SELECT emp
-        criteriaQuery.select(emp);
+//        criteriaQuery.select(emp);
+//
+//        if(searchCondition.equals("NAME")) {
+//            criteriaQuery.where(builder.equal(emp.get("name"), searchKeyword));
+//        } else if(searchCondition.equals("MAILID")) {
+//            criteriaQuery.where(builder.equal(emp.get("mailId"), searchKeyword));
+//        }
 
-        if(searchCondition.equals("NAME")) {
-            criteriaQuery.where(builder.equal(emp.get("name"), searchKeyword));
-        } else if(searchCondition.equals("MAILID")) {
-            criteriaQuery.where(builder.equal(emp.get("mailId"), searchKeyword));
-        }
-
-        TypedQuery<Employee> query = em.createQuery(criteriaQuery);
-        List<Employee> resultList = query.getResultList();
-        for (Employee result : resultList) {
-            System.out.println("---> " + result.toString());
+        TypedQuery<Object[]> query = em.createQuery(criteriaQuery);
+        List<Object[]> resultList = query.getResultList();
+        for (Object[] result : resultList) {
+            System.out.println("---> " + Arrays.toString(result));
         }
 
 
