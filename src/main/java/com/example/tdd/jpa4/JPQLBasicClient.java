@@ -80,7 +80,7 @@ public class JPQLBasicClient {
             Employee employee = new Employee();
             employee.setName("직원 " + i);
             employee.setMailId("anti-corona" + i);
-            employee.setDeptName("개발부");
+         //   employee.setDeptName("개발부");
             employee.setSalary(12700.00 * i);
             employee.setStartDate(new Date());
             employee.setTitle("사원");

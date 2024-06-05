@@ -4,9 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -16,7 +14,7 @@ public class CriteriaSearchClient {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("Chapter07");
         try {
-       //     dataInsert(emf);
+     //       dataInsert(emf);
             dataSelect(emf);
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,8 +39,11 @@ public class CriteriaSearchClient {
         // FROM Employee emp
         Root<Employee> emp = criteriaQuery.from(Employee.class);
 
+        // INNER JOIN emp.dept dept
+        Join<Employee, Department> dept = emp.join("dept", JoinType.LEFT);
+
         // SELECT emp.id, emp.name, emp.salary
-        criteriaQuery.multiselect(emp.get("id"), emp.get("name"), emp.get("salary"));
+        criteriaQuery.multiselect(emp.get("id"), emp.get("name"), emp.get("salary"), dept.get("name")); // 부서 이름(emp.dept.name)
 
         // SELECT emp
 //        criteriaQuery.select(emp);
@@ -84,16 +85,37 @@ public class CriteriaSearchClient {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
+        // 부서 정보 등록
+        Department devDept = new Department();
+        devDept.setName("개발부");
+        em.persist(devDept);
+
+        Department salseDept = new Department();
+        salseDept.setName("영업부");
+        em.persist(salseDept);
+
         // 직원 정보 등록
         for(int i= 1; i <= 3; i++) {
             Employee employee = new Employee();
             employee.setName("개발맨 " + i);
             employee.setMailId("Corona" + i);
-            employee.setDeptName("개발부");
+//            employee.setDeptName("개발부");
             employee.setSalary(12700.00 * i);
             employee.setStartDate(new Date());
             employee.setTitle("사원");
             employee.setCommissionPct(10.00);
+            em.persist(employee);
+        }
+
+        for(int i= 1; i <= 3; i++) {
+            Employee employee = new Employee();
+            employee.setName("영업맨 " + i);
+            employee.setMailId("Virus" + i);
+//            employee.setDeptName("개발부");
+            employee.setSalary(23800.00 * i);
+            employee.setStartDate(new Date());
+            employee.setTitle("과장");
+            employee.setCommissionPct(15.00);
             em.persist(employee);
         }
 
