@@ -33,50 +33,26 @@ public class CriteriaSearchClient {
         CriteriaBuilder builder = em.getCriteriaBuilder();
 
         // 크라이테리어 쿼리 생성
-        CriteriaQuery<Object[]> criteriaQuery = builder.createQuery(Object[].class);
-        // CriteriaQuery<Employee> criteriaQuery = builder.createQuery(Employee.class);
+        CriteriaQuery<Employee> criteriaQuery = builder.createQuery(Employee.class);
 
         // FROM Employee emp
         Root<Employee> emp = criteriaQuery.from(Employee.class);
 
-        // INNER JOIN emp.dept dept
-        Join<Employee, Department> dept = emp.join("dept", JoinType.LEFT);
-
-        // SELECT emp.id, emp.name, emp.salary
-        criteriaQuery.multiselect(emp.get("id"), emp.get("name"), emp.get("salary"), dept.get("name")); // 부서 이름(emp.dept.name)
-
         // SELECT emp
-//        criteriaQuery.select(emp);
-//
-//        if(searchCondition.equals("NAME")) {
-//            criteriaQuery.where(builder.equal(emp.get("name"), searchKeyword));
-//        } else if(searchCondition.equals("MAILID")) {
-//            criteriaQuery.where(builder.equal(emp.get("mailId"), searchKeyword));
-//        }
+        criteriaQuery.select(emp);
 
-        TypedQuery<Object[]> query = em.createQuery(criteriaQuery);
-        List<Object[]> resultList = query.getResultList();
-        for (Object[] result : resultList) {
-            System.out.println("---> " + Arrays.toString(result));
+        // JOIN FETCH emp.dept dept
+        emp.fetch("dept", JoinType.LEFT);
+
+        // WHERE emp.dept is null
+        criteriaQuery.where(builder.like(emp.<String>get("mailId"), "%rona%"));
+
+        TypedQuery<Employee> query = em.createQuery(criteriaQuery);
+        List<Employee> resultList = query.getResultList();
+        for (Employee employee : resultList) {
+            System.out.println("---> " + employee.toString());
+
         }
-
-
-//        // 검색 관련 쿼리
-//        String jpqlByMailId = "SELECT e FROM Employee e WHERE e.mailId=:searchKeyword";
-//        String jpqlByName = "SELECT e FROM Employee e WHERE e.name=:searchKeyword";
-//
-//        TypedQuery<Employee> query = null;
-//
-//        // 검색 조건에 따른 분기 처리
-//        if(searchCondition.equals("NAME")) {
-//            query = em.createQuery(jpqlByName, Employee.class);
-//        } else if(searchCondition.equals("MAILID")) {
-//            query = em.createQuery(jpqlByMailId, Employee.class);
-//        }
-
-
-
-
 
         em.close();
     }
