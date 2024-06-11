@@ -2,6 +2,8 @@ package com.example.tdd.jpa5;
 
 import org.springframework.context.support.GenericXmlApplicationContext;
 
+import java.util.List;
+
 public class EmployeeServiceClient {
 
     public static void main(String[] args) {
@@ -11,10 +13,32 @@ public class EmployeeServiceClient {
         DepartmentService deptService = (DepartmentService) container.getBean("deptService");
         EmployeeService employeeService = (EmployeeService) container.getBean("empService");
 
-        dataInsert(deptService, employeeService);
+     //   dataInsert(deptService, employeeService);
+        dataSelect(deptService);
 
         container.close();
 
+    }
+
+    private static void dataSelect(DepartmentService departmentService) {
+        /**
+         * 직원 목록 조회
+         */
+//        List<Employee> employeeList = employeeService.getEmployeeList(new Employee());
+//
+//        System.out.println("직원 목록");
+//        for (Employee employee : employeeList) {
+//            System.out.println("---> " + employee.getName() + "의 부서명 : " + employee.getDept().getName());
+//        }
+        Department department = new Department();
+        department.setDeptId(1L);
+        Department findDept = departmentService.getDepartment(department);
+
+        System.out.println("부서명 : " + findDept.getName());
+        System.out.println("직원 목록");
+        for (Employee employee : findDept.getEmployeeList()) {
+            System.out.println("---> " + employee.toString());
+        }
     }
 
     private static void dataInsert(DepartmentService departmentService, EmployeeService employeeService) {

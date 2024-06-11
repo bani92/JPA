@@ -19,6 +19,24 @@
 
     <bean id = "entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+        <property name="jpaProperties">
+            <props>
+
+                <!-- 필수 속성 -->
+                <prop key="javax.persistence.jdbc.driver">org.mariadb.jdbc.Driver</prop>
+                <prop key="javax.persistence.jdbc.user">root</prop>
+                <prop key="javax.persistence.jdbc.password">1234</prop>
+                <prop key="javax.persistence.jdbc.url">jdbc:mariadb://localhost:3306/basic</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MariaDBDialect</prop>
+
+                <!-- 옵션 -->
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.use_sql_comments">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+            </props>
+        </property>
+
     </bean>
 
     <bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
