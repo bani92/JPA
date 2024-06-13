@@ -1,10 +1,11 @@
 package com.example.tdd.jpa5;
 
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("deptService")
+@Transactional
 public class DepartmentService {
 
     @Autowired

@@ -1,5 +1,7 @@
 package com.example.tdd.jpa5;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.aspectj.SpringConfiguredConfiguration;
 import org.springframework.context.support.GenericXmlApplicationContext;
 
 import java.util.List;
@@ -8,7 +10,8 @@ public class EmployeeServiceClient {
 
     public static void main(String[] args) {
 
-        GenericXmlApplicationContext container = new GenericXmlApplicationContext("spring/business-layer.xml");
+        // GenericXmlApplicationContext container = new GenericXmlApplicationContext("spring/business-layer.xml");
+        AnnotationConfigApplicationContext container = new AnnotationConfigApplicationContext(SpringConfiguration.class);
 
         DepartmentService deptService = (DepartmentService) container.getBean("deptService");
         EmployeeService employeeService = (EmployeeService) container.getBean("empService");
