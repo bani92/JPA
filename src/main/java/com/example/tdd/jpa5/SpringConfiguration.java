@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManagerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 
 @Configuration
 @ComponentScan(basePackages = "com.example.tdd.jpa5")
+@EnableJpaRepositories(basePackages = "com.example.tdd.jpa5.repository")
 public class SpringConfiguration {
 
     @Bean
@@ -32,7 +34,7 @@ public class SpringConfiguration {
         return dataSource;
     }
 
-    @Bean
+    @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean factoryBean() {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setJpaVendorAdapter(vendorAdapter());
@@ -49,7 +51,7 @@ public class SpringConfiguration {
         return factoryBean;
     }
 
-    @Bean
+    @Bean(name = "transactionManager")
     public JpaTransactionManager txManager(EntityManagerFactory factory) {
         JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setEntityManagerFactory(factory);

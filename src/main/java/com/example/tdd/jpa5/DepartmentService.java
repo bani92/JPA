@@ -13,10 +13,10 @@ public class DepartmentService {
 
     @Transactional
     public void insertDepartment(Department department) {
-        departmentRepository.insertDepartment(department);
+        departmentRepository.save(department);
     }
 
     public Department getDepartment(Department department) {
-        return departmentRepository.getDepartment(department);
+        return departmentRepository.findById(department.getDeptId()).get();
     }
 }

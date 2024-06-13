@@ -14,22 +14,22 @@ public class EmployeeService {
     private EmployeeRepository employeeRepository;
 
     public void insertEmployee(Employee employee) {
-        employeeRepository.insertEmployee(employee);
+        employeeRepository.save(employee);
     }
 
     public void updateEmployee(Employee employee) {
-        employeeRepository.updateEmployee(employee);
+        employeeRepository.save(employee);
     }
 
     public void deleteEmployee(Employee employee) {
-        employeeRepository.deleteEmployee(employee);
+        employeeRepository.delete(employee);
     }
 
     public Employee getEmployee(Employee employee) {
-        return employeeRepository.getEmployee(employee);
+        return employeeRepository.findById(employee.getId()).get();
     }
 
     public List<Employee> getEmployeeList(Employee employee) {
-        return employeeRepository.getEmployeeList(employee);
+        return (List<Employee>)employeeRepository.findAll();
     }
 }
