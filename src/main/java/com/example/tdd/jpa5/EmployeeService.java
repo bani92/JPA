@@ -1,6 +1,9 @@
 package com.example.tdd.jpa5;
 
+import com.example.tdd.jpa5.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +32,8 @@ public class EmployeeService {
         return employeeRepository.findById(employee.getId()).get();
     }
 
-    public List<Employee> getEmployeeList(Employee employee) {
-        return (List<Employee>)employeeRepository.findAll();
+    public List<Employee> getEmployeeList(Employee employee, int pageNumber) {
+        Pageable paging = PageRequest.of(pageNumber - 1, 3);
+        return (List<Employee>)employeeRepository.findByNameContaining(employee.getMailId(),paging);
     }
 }

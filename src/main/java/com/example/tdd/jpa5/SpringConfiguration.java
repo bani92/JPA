@@ -9,14 +9,19 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
 
 @Configuration
 @ComponentScan(basePackages = "com.example.tdd.jpa5")
-@EnableJpaRepositories(basePackages = "com.example.tdd.jpa5.repository")
+@EnableTransactionManagement
+@EnableJpaRepositories(basePackages = "com.example.tdd.jpa5.repository", entityManagerFactoryRef = "factoryBean", transactionManagerRef = "txManager")
 public class SpringConfiguration {
+
+
+
 
     @Bean
     public HibernateJpaVendorAdapter vendorAdapter() {
@@ -34,7 +39,7 @@ public class SpringConfiguration {
         return dataSource;
     }
 
-    @Bean(name = "entityManagerFactory")
+    @Bean
     public LocalContainerEntityManagerFactoryBean factoryBean() {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setJpaVendorAdapter(vendorAdapter());
@@ -51,7 +56,7 @@ public class SpringConfiguration {
         return factoryBean;
     }
 
-    @Bean(name = "transactionManager")
+    @Bean
     public JpaTransactionManager txManager(EntityManagerFactory factory) {
         JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setEntityManagerFactory(factory);
