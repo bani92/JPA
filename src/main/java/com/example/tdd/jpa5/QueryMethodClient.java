@@ -2,7 +2,9 @@ package com.example.tdd.jpa5;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.domain.Page;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class QueryMethodClient {
@@ -24,13 +26,12 @@ public class QueryMethodClient {
 
     private static void dataSelect(EmployeeService employeeService) {
         Employee employee = new Employee();
-         employee.setName("");
-        employee.setMailId("Dev");
+        employee.setName("개발");
 
-        List<Employee> resultList = employeeService.getEmployeeList(employee,1);
+        List<Object[]> employeeList = employeeService.getEmployeeList(employee);
         System.out.println("직원 목록");
-        for (Employee result : resultList) {
-            System.out.println("---> " + result.toString());
+        for (Object[] result : employeeList) {
+            System.out.println("---> " + Arrays.toString(result));
 
         }
 
