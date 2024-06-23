@@ -35,11 +35,15 @@ public class EmployeeService {
     }
 
     public List<Object[]> getEmployeeList(Employee employee) {
-        return employeeRepository.findByJPQL(employee.getName());
+        Pageable paging = PageRequest.of(0, 3, Sort.Direction.DESC, "id");
+
+        return employeeRepository.findByJPQL(employee.getName(), paging);
+        // return employeeRepository.findByNativeQuery(employee.getName());
     }
     public Page<Employee> getEmployeeList(Employee employee, int pageNumber) {
-        Pageable paging = PageRequest.of(pageNumber - 1, 3, Sort.by(new Sort.Order(Sort.Direction.DESC,"mailId"),
-                new Sort.Order(Sort.Direction.ASC, "salary")));
+        Pageable paging = PageRequest.of(0, 3, Sort.Direction.DESC, "id");
+//        Pageable paging = PageRequest.of(pageNumber - 1, 3, Sort.by(new Sort.Order(Sort.Direction.DESC,"mailId"),
+//                new Sort.Order(Sort.Direction.ASC, "salary")));
         return employeeRepository.findByNameContaining(employee.getName(),paging);
     }
 }
